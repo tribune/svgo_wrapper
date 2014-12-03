@@ -1,5 +1,5 @@
 require "spec_helper"
 
 describe SvgoWrapper::VERSION do
-  it { should_not be_nil }
+  it { is_expected.not_to be_nil }
 end
