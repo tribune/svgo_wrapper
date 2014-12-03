@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = SvgoWrapper::VERSION
   spec.authors       = ["gdeoliveira"]
   spec.email         = ["gdeoliveira@tribune.com"]
-  spec.summary       = %q{Write a short summary. Required.}
-  spec.description   = %q{Write a longer description. Optional.}
+  spec.summary       = "Simple `svgo` wrapper."
+  spec.description   = "This is a simple wrapper for the `svgo` command line tool."
   spec.homepage      = ""
   spec.license       = "MIT"
   spec.files         = `git ls-files -z`.split("\x0")
