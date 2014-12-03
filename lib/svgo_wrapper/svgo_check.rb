@@ -1,3 +1,6 @@
+require "open4"
+require "svgo_wrapper/constants"
+
 class SvgoWrapper
   class << self
     def svgo_present?
