@@ -7,4 +7,4 @@ end
 
 RSpec::Core::RakeTask.new(:spec)
 
-task :default => :coverage
+task default: :coverage

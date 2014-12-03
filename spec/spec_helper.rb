@@ -1,7 +1,7 @@
 require "simplecov" unless ENV["COVERAGE"].nil?
 
-$LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
-require 'svgo_wrapper'
+$LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
+require "svgo_wrapper"
 
 RSpec.configure do |config|
   config.color = true
