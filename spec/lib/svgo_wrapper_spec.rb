@@ -108,4 +108,40 @@ describe SvgoWrapper do
       end
     end
   end
+
+  describe "#optimize_images_data" do
+    let(:svg_image) { " <svg><metadata>My Metadata</metadata><title>My Title</title></svg>" }
+
+    context "without plugins" do
+      subject { described_class.new.optimize_images_data svg_image }
+
+      it { is_expected.to start_with("<svg") }
+      it { is_expected.to end_with("/svg>\n") }
+    end
+
+    context "using plugins" do
+      context "to remove the title and keep the metadata" do
+        subject { described_class.new(enable: :removeTitle, disable: [:removeMetadata]).optimize_images_data svg_image }
+
+        it { is_expected.to match(/My Metadata/) }
+        it { is_expected.not_to match(/My Title/) }
+      end
+
+      context "to keep the title and remove the metadata" do
+        subject { described_class.new(enable: [:removeMetadata], disable: :removeTitle).optimize_images_data svg_image }
+
+        it { is_expected.to match(/My Title/) }
+        it { is_expected.not_to match(/My Metadata/) }
+      end
+    end
+
+    context "with incorrect data" do
+      let(:invalid_svg_image) { " <svg><title>This is wrong...</svg>" }
+      subject { described_class.new.optimize_images_data invalid_svg_image }
+
+      it "raises a parsing error" do
+        expect { subject }.to raise_error(described_class::ParserError, "Unexpected close tag\n")
+      end
+    end
+  end
 end
