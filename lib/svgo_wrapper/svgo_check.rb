@@ -5,7 +5,7 @@ class SvgoWrapper
   class << self
     def svgo_present?
       process = Open4.spawn "svgo -i - -o -",
-                            stdin: "<svg xmlns='http://www.w3.org/2000/svg'></svg>",
+                            stdin: " <svg/>",
                             stdout: output = "",
                             stdout_timeout: DEFAULT_TIMEOUT
 
