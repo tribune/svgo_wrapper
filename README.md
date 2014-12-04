@@ -1,6 +1,6 @@
 # Tribune::SvgoWrapper
 
-TODO: Write a gem description
+This is a simple wrapper for the `svgo` command line tool.
 
 ## Installation
 
@@ -20,12 +20,15 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+```ruby
+require "svgo_wrapper"
 
-## Contributing
+# Create a wrapper with enabled and disabled plugins.
+# All attributes are optional.
+wrapper = SvgoWrapper.new enabled: :removeTitle,
+                          disabled: [:convertColors, :removeMetadata],
+                          timeout: 10 # seconds
 
-1. Fork it ( https://github.com/[my-github-username]/tribune-svgo_wrapper/fork )
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create a new Pull Request
+# Parse image data
+wrapper.optimize_images_data " <svg> </svg> "  #=> "<svg/>\n"
+```
