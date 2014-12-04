@@ -1,1 +1,1 @@
-SimpleCov.start
+SimpleCov.start { add_filter "/spec/" }
