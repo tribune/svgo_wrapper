@@ -10,7 +10,13 @@ Gem::Specification.new do |spec|
   spec.email         = ["gdeoliveira@tribune.com"]
   spec.summary       = "Simple `svgo` wrapper."
   spec.description   = "This is a simple wrapper for the `svgo` command line tool."
-  spec.files         = `git ls-files -z`.split("\x0")
+  spec.files         = [".gitignore", ".rubocop.yml", ".ruby-version", ".simplecov", ".travis.yml", "Gemfile",
+                        "Guardfile", "README.md", "Rakefile", "lib/svgo_wrapper.rb", "lib/svgo_wrapper/constants.rb",
+                        "lib/svgo_wrapper/error.rb", "lib/svgo_wrapper/parser_error.rb",
+                        "lib/svgo_wrapper/svgo_check.rb", "lib/svgo_wrapper/version.rb",
+                        "spec/lib/svgo_wrapper/constants_spec.rb", "spec/lib/svgo_wrapper/svgo_check_spec.rb",
+                        "spec/lib/svgo_wrapper/version_spec.rb", "spec/lib/svgo_wrapper_spec.rb", "spec/spec_helper.rb",
+                        "tasks/coverage.rb", "tribune-svgo_wrapper.gemspec"]
   spec.test_files    = spec.files.grep(/^(test|spec|features)/)
   spec.require_paths = ["lib"]
 
