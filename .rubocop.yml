@@ -4,6 +4,8 @@ Style/AndOr:
   EnforcedStyle: conditionals
 Style/Documentation:
   Enabled: false
+Style/SignalException:
+  EnforcedStyle: only_raise
 Style/SpaceInsideBlockBraces:
   SpaceBeforeBlockParameters: false
 Style/StringLiterals:
