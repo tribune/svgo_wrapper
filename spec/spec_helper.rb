@@ -10,3 +10,6 @@ RSpec.configure do |config|
     c.syntax = :expect
   end
 end
+
+# Bind randomized execution to the current seed in RSpec (i.e. for Array#sample).
+srand RSpec.configuration.seed

@@ -5,11 +5,16 @@ require "svgo_wrapper/svgo_check"
 require "svgo_wrapper/version"
 
 class SvgoWrapper
-  attr_reader :disabled_plugins, :enabled_plugins
+  attr_reader :disabled_plugins, :enabled_plugins, :timeout
 
-  def initialize(enable: [], disable: [])
+  def initialize(enable: [], disable: [], timeout: DEFAULT_TIMEOUT)
     self.enabled_plugins = filter_plugins(enable).freeze
     self.disabled_plugins = filter_plugins(disable).freeze
+    self.timeout = timeout
+  end
+
+  def timeout=(value)
+    @timeout = value.is_a?(Numeric) ? value : (@timeout || DEFAULT_TIMEOUT)
   end
 
   private

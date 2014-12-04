@@ -55,4 +55,57 @@ describe SvgoWrapper do
       it { is_expected.to contain_exactly(*valid_plugins_as_symbols) }
     end
   end
+
+  describe "timeout" do
+    let(:default_timeout) { described_class::DEFAULT_TIMEOUT }
+    let(:valid_timeout) { 25.5 }
+    let(:invalid_timeout) { :XVIII }
+
+    context "when none is passed" do
+      subject { described_class.new }
+
+      it "has a default value" do
+        expect(subject.timeout).to eq(default_timeout)
+      end
+
+      it "can set a new valid value" do
+        subject.timeout = invalid_timeout
+        expect(subject.timeout).to eq(default_timeout)
+        subject.timeout = valid_timeout
+        expect(subject.timeout).to eq(valid_timeout)
+      end
+    end
+
+    context "when valid value is passed" do
+      let(:valid_timeout_2) { 32 }
+
+      subject { described_class.new(timeout: valid_timeout) }
+
+      it "has that value set" do
+        expect(subject.timeout).to eq(valid_timeout)
+      end
+
+      it "can set a new valid value" do
+        subject.timeout = invalid_timeout
+        expect(subject.timeout).to eq(valid_timeout)
+        subject.timeout = valid_timeout_2
+        expect(subject.timeout).to eq(valid_timeout_2)
+      end
+    end
+
+    context "when invalid value is passed" do
+      subject { described_class.new(timeout: invalid_timeout) }
+
+      it "has a default value" do
+        expect(subject.timeout).to eq(default_timeout)
+      end
+
+      it "can set a new valid value" do
+        subject.timeout = invalid_timeout
+        expect(subject.timeout).to eq(default_timeout)
+        subject.timeout = valid_timeout
+        expect(subject.timeout).to eq(valid_timeout)
+      end
+    end
+  end
 end
