@@ -33,7 +33,11 @@ class SvgoWrapper
   end
 
   def timeout=(value)
-    @timeout = value.is_a?(Numeric) ? value : (@timeout || DEFAULT_TIMEOUT)
+    if value.is_a? Numeric
+      @timeout = value
+    elsif @timeout.nil?
+      @timeout = DEFAULT_TIMEOUT
+    end
   end
 
   private
