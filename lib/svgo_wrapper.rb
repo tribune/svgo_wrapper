@@ -11,7 +11,7 @@ class SvgoWrapper
   def initialize(enable: nil, disable: nil, timeout: DEFAULT_TIMEOUT)
     self.enabled_plugins = filter_plugins(Set[*enable]).freeze
     self.disabled_plugins = filter_plugins(Set[*disable]).freeze
-    self.plugin_args = generate_plugin_args.freeze
+    self.plugin_args = generate_plugin_args(enabled: enabled_plugins, disabled: disabled_plugins).freeze
     self.timeout = timeout
   end
 
@@ -39,7 +39,8 @@ class SvgoWrapper
     VALID_PLUGINS & plugins.map(&:to_sym)
   end
 
-  def generate_plugin_args
-    (disabled_plugins.map {|v| "--disable=#{v}" } + enabled_plugins.map {|v| "--enable=#{v}" }) * " "
+  def generate_plugin_args(enabled:, disabled:)
+    (disabled.map {|v| "--disable=#{v}" } +
+     enabled.map {|v| "--enable=#{v}" }).join(" ")
   end
 end
