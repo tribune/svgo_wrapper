@@ -143,5 +143,27 @@ describe SvgoWrapper do
         expect { subject }.to raise_error(described_class::ParserError, "Unexpected close tag\n")
       end
     end
+
+    context "`svgo` tool unexpectedly fails" do
+      let(:mocked_status) do
+        # A mock of Process::Status
+        Object.new.tap do |o|
+          o.instance_eval do
+            define_singleton_method :signaled?, proc { false }
+            define_singleton_method :exitstatus, proc { 123 }
+          end
+        end
+      end
+
+      subject { described_class.new.optimize_images_data svg_image }
+
+      before(:each) do
+        allow(Open4).to receive(:spawn).and_raise(Open4::SpawnError.new("command example", mocked_status))
+      end
+
+      it "raises a general error" do
+        expect { subject }.to raise_error(described_class::Error, "Unexpected error (123)\n")
+      end
+    end
   end
 end

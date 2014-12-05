@@ -3,6 +3,7 @@ require "set"
 require "open4"
 
 require "svgo_wrapper/constants"
+require "svgo_wrapper/error"
 require "svgo_wrapper/parser_error"
 require "svgo_wrapper/svgo_check"
 require "svgo_wrapper/version"
@@ -18,10 +19,14 @@ class SvgoWrapper
   end
 
   def optimize_images_data(data)
-    Open4.spawn ["svgo", plugin_args, "-i", "-", "-o", "-"],
-                stdin: data,
-                stdout: output = "",
-                stdout_timeout: timeout
+    begin
+      Open4.spawn ["svgo", plugin_args, "-i", "-", "-o", "-"],
+                  stdin: data,
+                  stdout: output = "",
+                  stdout_timeout: timeout
+    rescue Open4::SpawnError => e
+      raise Error, "Unexpected error (#{e.exitstatus})\n"
+    end
 
     raise ParserError, output unless output.start_with? "<svg"
     output
