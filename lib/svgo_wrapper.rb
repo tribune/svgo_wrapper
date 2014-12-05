@@ -1,3 +1,5 @@
+require "set"
+
 require "open4"
 
 require "svgo_wrapper/constants"
@@ -16,7 +18,7 @@ class SvgoWrapper
   end
 
   def optimize_images_data(data)
-    Open4.spawn "svgo #{plugin_args} -i - -o -",
+    Open4.spawn ["svgo", plugin_args, "-i", "-", "-o", "-"],
                 stdin: data,
                 stdout: output = "",
                 stdout_timeout: timeout
@@ -41,6 +43,6 @@ class SvgoWrapper
 
   def generate_plugin_args(enabled:, disabled:)
     (disabled.map {|v| "--disable=#{v}" } +
-     enabled.map {|v| "--enable=#{v}" }).join(" ")
+     enabled.map {|v| "--enable=#{v}" }).flatten
   end
 end
