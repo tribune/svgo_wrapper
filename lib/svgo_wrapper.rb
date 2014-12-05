@@ -12,8 +12,8 @@ class SvgoWrapper
   attr_reader :disabled_plugins, :enabled_plugins, :timeout
 
   def initialize(enable: nil, disable: nil, timeout: DEFAULT_TIMEOUT)
-    self.enabled_plugins = filter_plugins(Set[*enable]).freeze
-    self.disabled_plugins = filter_plugins(Set[*disable]).freeze
+    self.enabled_plugins = enable
+    self.disabled_plugins = disable
     self.plugin_args = generate_plugin_args(enabled: enabled_plugins, disabled: disabled_plugins).freeze
     self.timeout = timeout
   end
@@ -42,9 +42,15 @@ class SvgoWrapper
 
   private
 
-  # Eventually we might let users modify these. Not for now.
-  attr_writer :disabled_plugins, :enabled_plugins
   attr_accessor :plugin_args
+
+  def disabled_plugins=(values)
+    @disabled_plugins = filter_plugins(Set[*values]).freeze
+  end
+
+  def enabled_plugins=(values)
+    @enabled_plugins = filter_plugins(Set[*values]).freeze
+  end
 
   def filter_plugins(plugins)
     VALID_PLUGINS & plugins.map(&:to_sym)
