@@ -10,6 +10,14 @@ describe SvgoWrapper do
   let(:invalid_plugins) { valid_plugins + ["inv4lid", :plug1ns] }
   let(:valid_plugins_as_symbols) { valid_plugins.map(&:to_sym) }
 
+  describe "valid_plugins" do
+    subject { valid_plugins }
+
+    it "consists of Symbols and Strings" do
+      expect(subject.map(&:class)).to eq([Symbol, String, Symbol])
+    end
+  end
+
   describe "enabled plugins" do
     context "when none are passed" do
       subject { described_class.new.enabled_plugins }
