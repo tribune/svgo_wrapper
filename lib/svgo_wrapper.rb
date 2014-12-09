@@ -14,13 +14,13 @@ class SvgoWrapper
   def initialize(enable: nil, disable: nil, timeout: DEFAULT_TIMEOUT)
     self.enabled_plugins = enable
     self.disabled_plugins = disable
-    self.plugin_args = generate_plugin_args(enabled: enabled_plugins, disabled: disabled_plugins).freeze
+    self.plugin_args = generate_plugin_args(enabled: enabled_plugins, disabled: disabled_plugins)
     self.timeout = timeout
   end
 
   def optimize_images_data(data)
     begin
-      Open4.spawn ["svgo", plugin_args, "-i", "-", "-o", "-"],
+      Open4.spawn ["svgo", *plugin_args, "-i", "-", "-o", "-"],
                   stdin: data,
                   stdout: output = "",
                   stdout_timeout: timeout
@@ -57,7 +57,7 @@ class SvgoWrapper
   end
 
   def generate_plugin_args(enabled:, disabled:)
-    (disabled.map {|v| "--disable=#{v}" } +
-     enabled.map {|v| "--enable=#{v}" }).flatten
+    (disabled.map {|v| "--disable=#{v}".freeze } +
+     enabled.map {|v| "--enable=#{v}".freeze }).freeze
   end
 end
