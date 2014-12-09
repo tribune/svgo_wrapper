@@ -3,6 +3,7 @@ gemspec
 
 group :development do
   gem "byebug" # , "~> 3.5.1"
+  gem "guard" # , "~> 2.10.2"
   gem "guard-rspec" # , "~> 4.3.1"
   gem "guard-rubocop" # , "~> 1.2.0"
   gem "libnotify" # , "~> 0.8.4"
