@@ -1,4 +1,4 @@
-# Tribune::SvgoWrapper
+# SvgoWrapper
 
 This is a simple wrapper for the `svgo` command line tool.
 
@@ -7,7 +7,7 @@ This is a simple wrapper for the `svgo` command line tool.
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'tribune-svgo_wrapper'
+gem "svgo_wrapper"
 ```
 
 And then execute:
@@ -16,7 +16,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install tribune-svgo_wrapper
+    $ gem install svgo_wrapper
 
 ## Usage
 
