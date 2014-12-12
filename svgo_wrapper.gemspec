@@ -12,6 +12,8 @@ Gem::Specification.new do |spec|
   spec.summary = "This is a simple wrapper for Kir Belevich's `svgo` tool."
   spec.description = "This gem wraps the SVG image optimization tool by Kir Belevich (svgo).\n" \
                      "It supports enabling and disabling specific cleanup plugins before optimizing the image data."
+  spec.homepage = "https://github.com/tribune/svgo_wrapper"
+  spec.license = "MIT"
   spec.files = `git ls-files -z`.split("\x0")
   spec.test_files = spec.files.grep(/^(test|spec|features)/)
   spec.require_paths = ["lib"]
