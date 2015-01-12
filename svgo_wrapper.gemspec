@@ -17,6 +17,7 @@ Gem::Specification.new do |spec|
   spec.files = `git ls-files -z`.split("\x0")
   spec.test_files = spec.files.grep(/^(test|spec|features)/)
   spec.require_paths = ["lib"]
+  spec.post_install_message = "Please verify that the `svgo` tool is installed: https://github.com/svg/svgo#how-to-use"
 
   spec.add_dependency "open4", "~> 1.3.4"
 end
