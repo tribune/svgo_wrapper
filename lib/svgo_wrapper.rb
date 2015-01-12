@@ -28,7 +28,7 @@ class SvgoWrapper
       raise Error, "Unexpected error (#{e.exitstatus})\n"
     end
 
-    raise ParserError, output unless output.start_with? "<svg"
+    raise ParserError, output unless output =~ /<svg/
     output
   end
 
