@@ -152,25 +152,38 @@ describe SvgoWrapper do
       end
     end
 
-    context "`svgo` tool unexpectedly fails" do
-      let(:mocked_status) do
-        # A mock of Process::Status
-        Object.new.tap do |o|
-          o.instance_eval do
-            define_singleton_method :signaled?, proc { false }
-            define_singleton_method :exitstatus, proc { 123 }
-          end
+    describe "`svgo` tool" do
+      context "returns an empty string" do
+        let(:svg_image) { " <svg/>" }
+
+        subject { described_class.new(enable: :transformsWithOnePath).optimize_images_data svg_image }
+
+        it "raises a descriptive exception" do
+          expect { subject }.to raise_error(described_class::ParserError, "There was a problem optimizing the SVG " \
+                                                                          "image with the selected plugins\n")
         end
       end
 
-      subject { described_class.new.optimize_images_data svg_image }
+      context "unexpectedly fails" do
+        let(:mocked_status) do
+          # A mock of Process::Status
+          Object.new.tap do |o|
+            o.instance_eval do
+              define_singleton_method :signaled?, proc { false }
+              define_singleton_method :exitstatus, proc { 123 }
+            end
+          end
+        end
 
-      before(:each) do
-        allow(Open4).to receive(:spawn).and_raise(Open4::SpawnError.new("command example", mocked_status))
-      end
+        subject { described_class.new.optimize_images_data svg_image }
 
-      it "raises a general error" do
-        expect { subject }.to raise_error(described_class::Error, "Unexpected error (123)\n")
+        before(:each) do
+          allow(Open4).to receive(:spawn).and_raise(Open4::SpawnError.new("command example", mocked_status))
+        end
+
+        it "raises a general error" do
+          expect { subject }.to raise_error(described_class::Error, "Unexpected error (123)\n")
+        end
       end
     end
   end

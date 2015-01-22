@@ -28,7 +28,7 @@ class SvgoWrapper
       raise Error, "Unexpected error (#{e.exitstatus})\n"
     end
 
-    raise ParserError, output unless output =~ /<svg/
+    verify_output(output)
     output
   end
 
@@ -59,5 +59,12 @@ class SvgoWrapper
   def generate_plugin_args(enabled:, disabled:)
     (disabled.map {|v| "--disable=#{v}".freeze } +
      enabled.map {|v| "--enable=#{v}".freeze }).freeze
+  end
+
+  def verify_output(output)
+    return if output =~ /<svg/
+
+    output = "There was a problem optimizing the SVG image with the selected plugins\n" if output.strip.empty?
+    raise ParserError, output
   end
 end
